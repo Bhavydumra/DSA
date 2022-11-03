@@ -1,0 +1,107 @@
+// QueueUsingArray.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include"iostream"
+using namespace std;
+class Queue
+{
+private:
+	int a[10],front,rear,k,j,i;
+public:
+	Queue()
+	{
+		front=0;
+		rear=-1;
+	}
+	void insert()
+	{
+		if (rear==10)
+		{
+			
+			cout<<"\nQueue is full\n";
+		}
+		else
+		{
+			cout<<"\nEnter new value= ";
+			cin>>a[++rear];
+		}
+	}
+	void del()
+	{
+		if(rear==-1)
+			cout<<"\nQueue is empty\n";
+		else
+		{
+			k=a[front];
+			for(i=front;i<=rear;i++)
+				a[i]=a[i+1];
+			--rear;
+			cout<<"\nDeleted element "<<k;
+		}
+	}
+	void isFull()
+	{
+		if (rear==5)
+			cout<<"\nQueue is full\n";
+		else
+			cout<<"\nQueue has "<<rear+1<<" elements.";
+	}
+	void isEmpty()
+	{
+		if(rear==-1)
+			cout<<"\nQueue is empty\n";
+		else
+			cout<<"\nQueue has "<<rear+1<<" elements.";
+	}
+	void peek()
+	{
+		cout<<"\n"<<a[front]<<"\n";
+	}
+
+};
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int ch,n,i;
+	Queue obj;
+	do
+	{
+		cout<<"\n1. Insert element in queue.\n";
+		cout<<"\n2. Delete element from queue.\n";
+		cout<<"\n3. Peek.\n";
+		cout<<"\n4. Is queue empty?\n";
+		cout<<"\n5. Is queue full?\n";
+		cin>>ch;
+		switch(ch)
+		{
+			case 1:
+				{
+					obj.insert();
+					break;
+				}
+			case 2:
+				{
+					obj.del();
+					break;
+				}
+			case 3:
+				{
+					obj.peek();
+					break;
+				}
+			case 4:
+				{
+					obj.isEmpty();
+					break;
+				}
+			case 5:
+				{
+					obj.isFull();
+					break;
+				}
+		}
+	}while(ch==1||ch==2||ch==3||ch==4);
+	system("pause");
+	return 0;
+}
