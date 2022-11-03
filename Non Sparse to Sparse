@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n,m,row,col,values,i,j;
+	cout<<"\nEnter total numbers of rows= ";
+	cin>>n;
+	cout<<"\nEnter total numbers of columns= ";
+	cin>>m;
+	cout<<"\nEnter total numbers of non zero values=";
+	cin>>values;
+	int b[values][3], a[n][m]={};
+	b[0][0]=n;
+	b[0][1]=m;
+	b[0][2]=values;
+	for(i=1;i<=values;i++)
+	{
+		cout<<"\nEnter row of "<<i<<"th value= ";
+		cin>>b[i][0];
+		do
+		{
+			if(b[i][0]<=n && b[i][0]>=0)
+				break;
+			else
+			{
+				cout<<"---Enter within 1 to "<<n<<"---\nEnter new= ";
+				cin>>b[i][0];
+			}
+		} while (b[i][0]>n || b[i][0]<0);
+		cout<<"\nEnter column of "<<i<<"th value= ";
+		cin>>b[i][1];
+		do
+		{
+			if(b[i][1]<=m && b[i][1]>0)
+				break;
+			else
+			{
+				cout<<"---Enter within 1 to "<<m<<"---\nEnter new= ";
+				cin>>b[i][1];
+			}
+		} while (b[i][1]>m || b[i][1]<0);
+		cout<<"\nEnter value= ";
+		cin>>b[i][2];
+	}
+	cout<<"\nNon sparse matrix=\n";//<<n<<"\t"<<m<<"\t"<<values<<"\n\n";
+	for(i=0;i<=values;i++)
+	{
+		for(j=0;j<3;j++)
+			cout<<b[i][j]<<"\t";
+		cout<<"\n";
+	
+        row=b[i][0]-1;
+		col=b[i][1]-1;
+		a[row][col]=b[i][2];
+    }
+	cout<<"\nSparse matrix of order "<<n<<"*"<<m<<" =\n";
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+			cout<<a[i][j]<<"\t";
+		cout<<"\n";
+	}
+	system("pause");
+	return 0;
+}
