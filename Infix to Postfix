@@ -1,0 +1,150 @@
+// InfixToPostfix.cpp : Defines the entry point for the console application.
+//
+#include<iostream>
+#include <string>
+using namespace std;
+
+class Stack
+{
+private:
+	int pos;
+	char a[20];
+public:
+	Stack()
+	{
+        a[20]==0;
+		pos=-1;
+	}
+	int empty()
+	{
+		if(pos==-1)
+			return 1;
+		else
+			return 0;
+	}
+	void push(int value)
+	{
+		if(pos==20)
+			cout<<"/nStack overflow./n";
+		else
+		{
+			++pos;
+			a[pos]=value;
+		}
+	}
+	int pop()
+	{
+		if(pos==-1)
+		{
+			cout<<"\nStack underflow.\n";
+			return 0;
+		}
+		else
+		{
+			return a[pos--];
+		}
+	}
+	int top()
+	{
+		return a[pos];
+	}
+};
+class Expression
+{
+public:
+	int precedence(char c)
+	{
+		if(c=='*'||c=='/')
+			return 2;
+		else if(c=='+'||c=='-')
+			return 1;
+	}
+};
+class InfixToPostfix
+{
+private:
+	Expression e;
+	int i,j;
+	char final[20];
+	Stack obj;
+public:
+	int infixToPostfix(string s)
+	{
+		j=0;
+		for(i=0;i<=s.length();i++)
+		{
+			switch(s[i])
+			{
+			case '+':
+            case '-':
+            case '*':
+            case '/':
+				if(obj.empty())
+					obj.push(s[i]);
+                else if(obj.top()=='('||obj.top()=='['||obj.top()=='{')
+                    obj.push(s[i]);
+				else if(e.precedence(s[i])<=e.precedence(obj.top()))
+				{
+					final[++j]=obj.pop();
+					obj.push(s[i]);
+				}
+				else
+                {
+					//final[++j]=obj.pop();
+                    obj.push(s[i]);
+				}
+                break;
+            case '(':
+            case '[':
+            case '{':
+                obj.push(s[i]);
+                break;
+            case ')':
+                while(obj.top()!='(')
+                {
+                    final[++j]=obj.pop();
+                }
+                obj.pop();
+                break;
+            case ']':
+                while(obj.top()!='[')
+                {
+                    final[++j]=obj.pop();
+                }
+                obj.pop();
+                break;
+            case '}':
+                while(obj.top()!='{')
+                {
+                    final[++j]=obj.pop();
+                }
+                obj.pop();
+                break;
+			default:
+				final[++j]=s[i];
+				break;
+			}
+		}
+		while(obj.empty()==0)
+        {
+			final[j++]=obj.pop();
+		}
+		cout<<"\nfinal=";
+        for(i=1;i<j;i++)
+            cout<<final[i];
+        cout<<"\n";
+		return 0;
+	}
+};
+
+
+int main()
+{
+    InfixToPostfix c;
+	string s; 
+	cout<<"\nEnter the expression->";
+		cin>>s;
+	c.infixToPostfix(s);
+	system("pause");
+	return 0;
+}
