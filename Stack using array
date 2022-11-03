@@ -1,0 +1,96 @@
+// StackUsingArray.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "iostream"
+using namespace std;
+class Stack
+{
+	private:
+		int pos,a[10];
+	public:
+		Stack()
+		{
+			pos=-1;
+		}
+		void isFullOrEmpty()
+		{
+			if(pos==10)
+				cout<<"\nStack is full.\n";
+			else
+			{
+				if(pos==-1)
+					cout<<"\nStack is empty.\n";
+				else
+					cout<<"\nStack has "<<pos+1<<" element.\n";
+			}
+		}
+		void push(int value)
+		{
+			if(pos==10)
+				cout<<"/nStack overflow./n";
+			else
+			{
+				++pos;
+				a[pos]=value;
+			}
+		}
+		int pop()
+		{
+			if(pos==-1)
+			{
+				cout<<"\nStack underflow.\n";
+				return 0;
+			}
+			else
+			{
+				return a[pos--];
+			}
+		}
+		void peek()
+		{
+			cout<<"\nStack peeked= "<<a[pos];
+			
+		}
+};
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int val,ch;
+	Stack s;
+	do{
+		cout<<"\n1. Stack is full or empty.";
+		cout<<"\n2. Push value.";
+		cout<<"\n3. Pop value.";
+		cout<<"\n4. Peek.\n";
+		cin>>ch;
+		switch(ch)
+		{
+			case 1:
+			{
+				s.isFullOrEmpty();
+				break;
+			}
+			case 2:
+			{
+				cout<<"\nenter value= ";
+				cin>>val;
+				s.push(val);
+				break;
+			}
+			case 3:
+			{
+				cout<<"\n"<<s.pop();
+				break;
+			}
+			case 4:
+			{
+				s.peek();
+				break;
+			}
+		}
+	}while(ch==1||ch==2||ch==3||ch==4);
+	system("pause");
+	return 0;
+}
+
