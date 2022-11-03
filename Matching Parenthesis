@@ -1,0 +1,105 @@
+#include "stdafx.h"
+#include "iostream"
+#include "string"
+using namespace std;
+class Stack
+{
+private:
+	int pos;
+	char a[10];
+public:
+	Stack()
+	{
+		pos=-1;
+	}
+	int empty()
+	{
+		if(pos==-1)
+			return 1;
+		else
+			return 0;
+	}
+	void push(int value)
+	{
+		if(pos==10)
+			cout<<"/nStack overflow./n";
+		else
+		{
+			++pos;
+			a[pos]=value;
+		}
+	}
+	int pop()
+	{
+		if(pos==-1)
+		{
+			cout<<"\nStack underflow.\n";
+			return 0;
+		}
+		else
+		{
+			return a[pos--];
+		}
+	}
+	int top()
+	{
+		return a[pos];
+	}
+};
+class Paranthesis
+{
+private:
+	Stack s;
+	int i;
+	char c;
+public:
+	bool isBalanced(string expression) 
+	{ 
+		for (i = 0;i < expression.length();i++) 
+		{ 
+			if (expression[i] == '(' || expression[i] == '{' || expression[i] == '[') 
+			{ 
+				s.push(expression[i]); 
+				continue; 
+			} 
+			else if(expression[i] != ')' && expression[i] != '}' && expression[i] != ']' )
+				continue;
+			if (s.empty()) 
+				return false; // initialize char for the top of staxk i.e we will gwt a topp bracket
+			c = s.top(); 
+			switch (expression[i]) 
+			{ 
+			case ')': 
+				if (c != '(') 
+					return false; 
+				break; 
+			case '}': 
+				if (c != '{') 
+					return false; 
+				break; 
+			case ']': 
+				if (c != '[') 
+					return false; 
+				break; 
+			default: 
+				 break; 
+			} 
+			s.pop(); 
+		} 
+		return s.empty(); 
+	} 
+};
+
+int _tmain(int argc, _TCHAR* argv[])
+{ 
+	string s; 
+	Paranthesis p;
+	cout << "paranthesis are -->"; 
+	cin >> s; 
+	if (p.isBalanced(s))
+		cout << "\nparanthesis are matching\n"; 
+	else
+		cout << "\nparanthesis are not matching\n"; 
+	system("pause");
+	return 0;
+}
