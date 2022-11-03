@@ -1,0 +1,65 @@
+// PalindromeUsingStack.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "iostream"
+#include "string"
+#include "stack"
+using namespace std;
+
+class Palindrome
+{
+private:
+	stack <char>obj;
+	int n,i,j,k;
+	char c;
+	string str1;
+public:
+	bool isPalindrome(string str)
+	{
+		k=str.length();
+		str1=' ';
+		for(i=0;i<k/2;i++)
+		{
+			obj.push(str[i]);
+		}
+		if(k%2==0)
+		{
+			for(i=k/2;i<str.length();i++)
+			{
+				c=obj.top();
+				if(c!=str[i])
+					return false;
+				obj.pop();
+			}
+			return obj.empty();
+		}
+		else
+		{
+			for(i=k/2+1;i<str.length();i++)
+			{
+				c=obj.top();
+				if(c!=str[i])
+					return false;
+				obj.pop();
+			}
+			return obj.empty();
+		}
+	}
+};
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	string s;
+	int i;
+	Palindrome p;
+	cout<<"\nEnter string= ";
+	cin>>s;
+	if(p.isPalindrome(s))
+		cout<<"\nPalindrome.\n";
+	else
+		cout<<"\nNot Palindrome\n";
+	system("pause");
+	return 0;
+}
+
