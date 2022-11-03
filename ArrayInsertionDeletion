@@ -1,0 +1,182 @@
+// ArrayInsertionDeletion.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "iostream"
+using namespace std;
+int n,a[50],i,j,position,value,before,after,temp1,temp2;
+
+void insert(int pos)									//function to insert element in array by position.
+{
+	cout<<"\nenter the new value=";
+	cin>>value;
+	if(pos<=n && pos>0)			//in between the index.
+	{
+		for(j=++n;j>=pos;j--)
+			a[j+1]=a[j];
+		a[pos]=value;
+	}
+	else
+	{
+		if(pos==n+1)			//after array.
+			a[++n]=value;
+		else
+			cout<<"\nunable to add\n";		//position doesn't exist.
+	}
+	cout<<"\n\tNew Array=\n";
+	for(i=1;i<=n;i++)
+		cout<<a[i]<<"\t";
+}
+void Delete(int pos)							//deletion function.
+{
+	if(pos<=n && pos>=0)				//deletion in between
+	{
+		for(j=pos;j<=n;j++)
+			a[j]=a[j+1];
+		n--;
+	}
+	else
+		if(pos==n)				//deletion from last
+			n--;
+		else
+			cout<<"\nPosition doesn't exist.\n";			
+
+	cout<<"\n\tNew Array=\n";
+	for(i=1;i<=n;i++)
+		cout<<a[i]<<"\t";
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	cout<<"Enter total number= ";
+	cin>>n;
+	cout<<"\nEnter values=\n";
+	for(i=1;i<=n;i++)
+		cin>>a[i];
+	do
+	{
+		cout<<"\nDo you want to:\n";
+		cout<<"\n\t1. Insert \n";
+		cout<<"\n\t2. Delete \n";
+		cin>>temp1;
+		switch(temp1)
+		{
+			case 1:
+				{
+					do
+					{
+						cout<<"\n\tInsert by: \n";
+						cout<<"\n\t\t1. Position \n";
+						cout<<"\n\t\t2. Before any value \n";
+						cout<<"\n\t\t3. After any value \n";
+						cin>>temp2;
+						switch(temp2)
+						{
+						case 1:
+							{
+								cout<<"\nEnter position=";
+								cin>>position;
+								insert(position);
+								break;
+							}
+						case 2:
+							{
+								cout<<"\nEnter value before you want to insert new value=";
+								cin>>before;
+								for(i=1;i<=n;i++)
+								{
+									if(a[i]==before)
+									{
+										position=i;
+										insert(position);
+										break;
+									}
+									else if(i==n)
+										cout<<"\nValue doesn't exist.";
+								}
+								break;
+							}
+						case 3:
+							{
+								cout<<"\nEnter value after you want to insert new value= ";
+								cin>>after;
+								for(i=1;i<n;i++)
+								{
+									if(a[i]==after)
+									{
+										position=i+1;
+										insert(position);
+										break;
+									}
+									else if(i==n)
+										cout<<"\nValue doesn't exist.";
+								}
+								break;
+							}
+						}
+					}while(temp2==1||temp2==2||temp2==3);
+					
+					break;
+				}
+			case 2:
+				{
+					do
+					{
+						cout<<"\n\tDelete by: \n";
+						cout<<"\n\t\t1. Position \n";
+						cout<<"\n\t\t2. Before any value \n";
+						cout<<"\n\t\t3. After any value \n";
+						cin>>temp2;
+						switch(temp2)
+						{
+						case 1:
+							{
+								cout<<"\nEnter position= ";
+								cin>>position;
+								Delete(position);
+								break;
+							}
+						case 2:
+							{
+								cout<<"\nEnter value before you want to delete new value=";
+								cin>>before;
+								for(i=1;i<=n;i++)
+								{
+									if(a[i]==before)
+									{
+										position=i-1;
+										Delete(position);
+										break;
+									}
+									else if(i==n)
+										cout<<"\nValue doesn't exist.";
+								}
+								break;
+							}
+							case 3:
+							{
+								cout<<"\nEnter value after you want to delete new value= ";
+								cin>>after;
+								for(i=1;i<n;i++)
+								{
+									if(a[i]==after)
+									{
+										position=i+1;
+										Delete(position);
+										break;
+									}
+									else if(i==n)
+										cout<<"\nValue doesn't exist.";
+								}
+								break;
+							}
+						}
+					}while(temp2==1||temp2==2||temp2==3);
+
+					break;
+				}
+			}
+	}while(temp1==1||temp1==2);
+	system("pause");
+	return 0;
+}
