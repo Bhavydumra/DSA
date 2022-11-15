@@ -1,0 +1,162 @@
+// QueueUsingStack.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include"iostream"
+using namespace std;
+
+class Stack
+{
+private:
+	int pos;
+	int a[20];
+public:
+	Stack()
+	{
+        a[20]==0;
+		pos=-1;
+	}
+	int empty()
+	{
+		if(pos==-1)
+			return 1;
+		else
+			return 0;
+	}
+	void push(int value)
+	{
+		if(pos==20)
+			cout<<"/nStack overflow./n";
+		else
+		{
+			++pos;
+			a[pos]=value;
+		}
+	}
+	int pop()
+	{
+		if(pos==-1)
+		{
+			cout<<"\nStack underflow.\n";
+			return 0;
+		}
+		else
+		{
+			return a[pos--];
+		}
+	}
+	int top()
+	{
+		return a[pos];
+	}
+};
+
+class Queue
+{
+private:
+	int n,m,i,j;
+	Stack ins,del;
+public:
+	Queue()
+	{
+		n=-1;
+		m=-1;
+	}
+	void insert(int d)
+	{
+		
+		if(n==-1 && m==-1)
+		{
+			ins.push(d);
+			n++;
+			return;
+		}
+		if(m>=0)
+		{
+			while(del.empty()==0)
+			{	ins.push(del.pop());
+				n++;
+				m--;
+			}
+			ins.push(d);
+			n++;
+		}
+		else
+		{	
+			ins.push(d);
+			n++;
+		}
+
+	}
+	void Delete()
+	{
+		if(n==-1 && m==-1)
+		{
+			cout<<"\n--empty--\n";
+			return;
+		}
+		
+		if(n>=0)
+		{
+			while(ins.empty()==0)
+			{
+				del.push(ins.pop());
+				n--;
+				m++;
+			}
+			n--;
+			cout<<"\n deleted element is "<<del.pop();
+		}
+		else
+		{
+			n--;
+			cout<<"\n deleted element is "<<del.pop();
+		}
+	}
+};
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int ch,v;
+	Queue obj;
+	do
+	{
+		cout<<"\n1. Insert element in queue.\n";
+		cout<<"\n2. Delete element from queue.\n";
+		/*cout<<"\n3. Peek.\n";
+		cout<<"\n4. Is queue empty?\n";
+		cout<<"\n5. Is queue full?\n";*/
+		cin>>ch;
+		switch(ch)
+		{
+			case 1:
+				{
+					cout<<"\nEnter value for insertion=";
+					cin>>v;
+					obj.insert(v);
+					break;
+				}
+			case 2:
+				{
+					obj.Delete();
+					break;
+				}
+			/*case 3:
+				{
+					obj.peek();
+					break;
+				}
+			case 4:
+				{
+					obj.isEmpty();
+					break;
+				}
+			case 5:
+				{
+					obj.isFull();
+					break;
+				}*/
+		}
+	}while(ch==1||ch==2||ch==3||ch==4);
+	system("pause");
+	return 0;
+}
