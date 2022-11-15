@@ -1,0 +1,267 @@
+// LinkList.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "iostream"
+using namespace std;
+
+class Node
+{
+public:
+	int data;		//data part for each node
+	Node* next;		//pointer to point next node
+	Node()			//initializing a node
+	{
+		data=0;
+		next=NULL;
+	}
+	Node(int d)		//for creating new node
+	{
+		data=d;
+		next=NULL;
+	}
+};
+class LinkList
+{
+private:
+	Node* head;		//to point head or address of 1st node
+	int n;
+public:
+	LinkList()
+	{
+		n=0;
+		head=NULL;
+	}
+	void insertAtEnd(int data)
+	{
+		Node* newNode= new Node(data);		//creating node or object for node
+		if(head==NULL)
+		{
+			n++;
+			head=newNode;		//if list is empty
+			return;
+		}
+		Node* temp=head;
+		while(temp->next!=NULL)		//traversing to find null pointer
+		{
+			temp=temp->next;
+		}
+		n++;
+		temp->next=newNode;			//adding address new node in list
+	}
+	void insertAtFront(int data)
+	{
+
+		Node* newNode= new Node(data);		//creating node or object for node
+		if(head==NULL)
+		{
+			n++;
+			head=newNode;		//if list is empty
+			return;
+		}
+		n++;
+		newNode->next=head;		//assigning address to new node
+		head=newNode;			//assigning head the address of new node
+	}
+	void insertAtPositon(int data,int pos)
+	{
+		Node* newNode= new Node(data);		
+		Node* temp=head,*prev=NULL;
+		//cout<<"\ntotal node="<<n;
+		if(pos>n)		//for larger positions
+			cout<<"\n---position not exist---\n";
+		if(pos==1)		//1st index
+		{
+			insertAtFront(data);
+			return;
+		}
+		if(0<pos<=n)		//inbetween position
+		{
+			n++;
+			for(int i=1;i<pos;i++)
+			{
+				prev=temp;
+				temp=temp->next;
+			}
+			prev->next=newNode;
+			newNode->next=temp;
+			return;
+		}
+		//else
+			//cout<<"\n---position not exist---\n";
+	}
+	void afterValueInsert(int val,int data)
+	{
+		Node *newNode=new Node(data);
+		Node *temp=head,*prev=NULL,*Next=temp->next;
+		while(Next!=NULL)
+		{
+			if(temp->data==val)
+			{
+				temp->next=newNode;
+				newNode->next=Next;
+				return;
+			}
+			prev=temp;
+			temp=Next;
+			Next=Next->next;
+		}
+		cout<<"\n---value not exist---\n";
+	}
+	void deleteAtEnd()
+	{
+		if(head==NULL)		//if list empty
+		{
+			cout<<"\n--list is empty--\n";
+			return;
+		}
+		Node *temp=head,*prev=NULL;
+		int v;
+		//Node* prev=NULL;
+		if(temp->next==NULL)		
+		{
+			head=NULL;
+			return;
+		}
+		while(temp->next!=NULL)
+		{
+			prev=temp;
+			temp=temp->next;
+			v=temp->data;
+		}
+		prev->next=NULL;
+		cout<<"\nDeleted element is "<<v;
+	}
+	void deleteAtFront()
+	{
+		Node *temp=head,*prev=NULL;
+		if(head==NULL)
+		{
+			cout<<"\n--list is empty--\n";
+			return;
+		}
+		int v=temp->data;
+		if(temp->next==NULL)
+		{
+			head=NULL;
+		}
+		else
+		{	temp=temp->next;
+			head=temp;
+		}
+		cout<<"\nDeleted element is "<<v;
+	}
+	/*void deleteAtPosition(int pos)
+	{
+		int i=1;
+		Node* temp=head;
+		Node* prev=NULL;
+		for(i=1;i<=pos;i++)
+		{
+			if(temp->next==NULL)
+			{
+				cout<<"---position not exist---";
+				return;
+			}
+			else
+			{
+				prev=temp;
+				temp=temp->next;
+			}
+			prev->next=temp->next;
+			return;
+		}
+	}*/
+	void printList()
+	{
+		if(head==NULL)		//when list is empty
+		{
+			cout<<"\n--List is empty--\n";
+			return;
+		}
+		cout<<"\nyour list:\n";
+		Node* temp=head;
+		while(temp->next!=NULL)		
+		{
+			cout<<temp->data<<endl;
+			temp=temp->next;
+		}
+		cout<<temp->data<<endl;
+	}
+
+};
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	LinkList l;
+	int temp,p,d,temp1;
+	do{
+		cout<<"\nLinked List\nDo you want to?\n";
+		cout<<"1.Insert element.\n2.Delete element.\n4.Ater any particular value\n5.Print list.\nEnter your choice=";
+		cin>>temp;
+		switch(temp)
+		{
+		case 1:
+			cout<<"\n1.At end.\n2.At front.\n3.At any position.\nEnter your choice= ";
+			cin>>temp1;
+			switch(temp1)
+			{
+			case 1:
+				cout<<"\nEnter data for new node=";
+				cin>>d;
+				l.insertAtEnd(d);
+				break;
+			case 2:
+				cout<<"\nEnter data for new node=";
+				cin>>d;
+				l.insertAtFront(d);
+				break;
+			case 3:
+				cout<<"\nEnter data for new node=";
+				cin>>d;
+				cout<<"\nEnter position for new node=";
+				cin>>p;
+				if(p<=0)
+					cout<<"\n---position not exist---\n";
+				else
+					l.insertAtPositon(d,p);
+				break;
+			}
+			break;
+		case 2:
+			cout<<"\n1.At end.\n2.At front.\nEnter your choice= ";
+			cin>>temp1;
+			switch(temp1)
+			{
+			case 1:
+				l.deleteAtEnd();
+				break;
+			case 2:
+				l.deleteAtFront();
+				break;
+			/*case 3:
+				cout<<"\nEnter position for delition of node=";
+				cin>>p;
+				if(p<=0)
+					cout<<"\n---position not exist---\n";
+				else
+					l.deleteAtPosition(p);
+				break;*/
+			}
+			break;
+		case 4:
+			int value;
+			cout<<"\nEnter value after you want to insert new= ";
+			cin>>value;
+			cout<<"\nEnter data for new node=";
+			cin>>d;
+			l.afterValueInsert(value,d);
+			break;
+		case 5:
+			l.printList();
+			break;
+		}
+	}while(temp==1 || temp==2 || temp==3 || temp==4 || temp==5);
+	system("pause");
+	return 0;
+}
