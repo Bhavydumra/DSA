@@ -67,15 +67,12 @@ public:
 	{
 		Node* newNode= new Node(data);		
 		Node* temp=head,*prev=NULL;
-		//cout<<"\ntotal node="<<n;
-		if(pos>n)		//for larger positions
-			cout<<"\n---position not exist---\n";
-		if(pos==1)		//1st index
+		if(pos==1 && n==0)		//1st index
 		{
 			insertAtFront(data);
 			return;
 		}
-		if(0<pos<=n)		//inbetween position
+		if(1<pos<=n)		//inbetween position
 		{
 			n++;
 			for(int i=1;i<pos;i++)
@@ -87,8 +84,8 @@ public:
 			newNode->next=temp;
 			return;
 		}
-		//else
-			//cout<<"\n---position not exist---\n";
+		else
+			cout<<"\n---position not exist---\n";
 	}
 	void afterValueInsert(int val,int data)
 	{
@@ -151,27 +148,6 @@ public:
 		}
 		cout<<"\nDeleted element is "<<v;
 	}
-	/*void deleteAtPosition(int pos)
-	{
-		int i=1;
-		Node* temp=head;
-		Node* prev=NULL;
-		for(i=1;i<=pos;i++)
-		{
-			if(temp->next==NULL)
-			{
-				cout<<"---position not exist---";
-				return;
-			}
-			else
-			{
-				prev=temp;
-				temp=temp->next;
-			}
-			prev->next=temp->next;
-			return;
-		}
-	}*/
 	void printList()
 	{
 		if(head==NULL)		//when list is empty
@@ -197,7 +173,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	int temp,p,d,temp1;
 	do{
 		cout<<"\nLinked List\nDo you want to?\n";
-		cout<<"1.Insert element.\n2.Delete element.\n4.Ater any particular value\n5.Print list.\nEnter your choice=";
+		cout<<"1.Insert element.\n2.Delete element.\n3.Ater any particular value\n4.Print list.\nEnter your choice=";
 		cin>>temp;
 		switch(temp)
 		{
@@ -239,17 +215,9 @@ int _tmain(int argc, _TCHAR* argv[])
 			case 2:
 				l.deleteAtFront();
 				break;
-			/*case 3:
-				cout<<"\nEnter position for delition of node=";
-				cin>>p;
-				if(p<=0)
-					cout<<"\n---position not exist---\n";
-				else
-					l.deleteAtPosition(p);
-				break;*/
 			}
 			break;
-		case 4:
+		case 3:
 			int value;
 			cout<<"\nEnter value after you want to insert new= ";
 			cin>>value;
@@ -257,11 +225,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			cin>>d;
 			l.afterValueInsert(value,d);
 			break;
-		case 5:
+		case 4:
 			l.printList();
 			break;
 		}
-	}while(temp==1 || temp==2 || temp==3 || temp==4 || temp==5);
+	}while(temp>0 && temp<5);
 	system("pause");
 	return 0;
 }
