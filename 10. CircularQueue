@@ -1,0 +1,89 @@
+#include <iostream>
+#define maxqueue 5
+using namespace std;
+
+class Queue
+{
+private:
+    int front, rear;
+    int items[maxqueue];
+
+public:
+    Queue()
+    {
+        front = -1;
+        rear = -1;
+    }
+    void insert(int x)
+    {
+        if ((rear + 1 == front || rear == maxqueue - 1 && front == 0))		 //if overflow
+
+        {
+            cout << "/////// overflow ///////" << endl;
+            return;
+        }
+        if (rear == maxqueue - 1)
+
+        {
+            rear = 0;
+        }
+        else
+            rear++;
+        items[rear] = x;
+        if (front == -1)
+            front = 0;
+    }
+    int del()
+    {
+        int val;
+        if (front == -1)
+        {
+            cout << "---underflow---" << endl;
+            return 0;
+        }
+        if (front == rear)
+        {
+            val = items[front];
+            front = -1;
+            rear = -1;
+        }
+        else
+        {
+            val = items[front];
+            if (front == maxqueue - 1)
+                front = 0;
+            else
+                front++;
+        }
+        return val;
+    }
+};
+int main()
+{
+    Queue q1;
+    int ch;
+    int value;
+    do
+    {
+        cout << "1  for insert in queue" << endl;
+        cout << "2 for delete from queue" << endl;
+
+        cin >> ch;
+
+        switch (ch)
+        {
+        case 1:
+            cout << "enter value you want to insert in queue=" << endl;
+            cin >> value;
+            q1.insert(value);
+
+            break;
+
+        case 2:
+            int x = q1.del();
+            cout << "value is =" << x << endl;
+            break;
+        }
+    } while (ch == 1||ch==2);
+    return 0;
+}
