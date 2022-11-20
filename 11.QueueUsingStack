@@ -1,6 +1,5 @@
 // QueueUsingStack.cpp : Defines the entry point for the console application.
 //
-
 #include "stdafx.h"
 #include"iostream"
 using namespace std;
@@ -14,7 +13,7 @@ public:
 	Stack()
 	{
         a[20]==0;
-		pos=-1;
+	pos=-1;
 	}
 	int empty()
 	{
@@ -54,67 +53,56 @@ public:
 class Queue
 {
 private:
-	int n,m,i,j;
 	Stack ins,del;
 public:
 	Queue()
 	{
-		n=-1;
-		m=-1;
+		
 	}
 	void insert(int d)
 	{
 		
-		if(n==-1 && m==-1)
+		if(ins.empty() && del.empty())
 		{
 			ins.push(d);
-			n++;
 			return;
 		}
-		if(m>=0)
+		if(ins.empty())
 		{
 			while(del.empty()==0)
 			{	ins.push(del.pop());
-				n++;
-				m--;
 			}
 			ins.push(d);
-			n++;
 		}
 		else
 		{	
 			ins.push(d);
-			n++;
 		}
 
 	}
 	void Delete()
 	{
-		if(n==-1 && m==-1)
+		if(ins.empty() && del.empty())
 		{
 			cout<<"\n--empty--\n";
 			return;
 		}
 		
-		if(n>=0)
+		if(del.empty())
 		{
 			while(ins.empty()==0)
 			{
 				del.push(ins.pop());
-				n--;
-				m++;
 			}
-			n--;
 			cout<<"\n deleted element is "<<del.pop();
 		}
 		else
 		{
-			n--;
 			cout<<"\n deleted element is "<<del.pop();
 		}
 	}
 };
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
 	int ch,v;
 	Queue obj;
@@ -122,9 +110,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		cout<<"\n1. Insert element in queue.\n";
 		cout<<"\n2. Delete element from queue.\n";
-		/*cout<<"\n3. Peek.\n";
-		cout<<"\n4. Is queue empty?\n";
-		cout<<"\n5. Is queue full?\n";*/
 		cin>>ch;
 		switch(ch)
 		{
@@ -140,23 +125,8 @@ int _tmain(int argc, _TCHAR* argv[])
 					obj.Delete();
 					break;
 				}
-			/*case 3:
-				{
-					obj.peek();
-					break;
-				}
-			case 4:
-				{
-					obj.isEmpty();
-					break;
-				}
-			case 5:
-				{
-					obj.isFull();
-					break;
-				}*/
 		}
-	}while(ch==1||ch==2||ch==3||ch==4);
+	}while(ch==1||ch==2);
 	system("pause");
 	return 0;
 }
