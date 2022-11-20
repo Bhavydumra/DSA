@@ -1,0 +1,136 @@
+// 13.SortedLinkedList.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "iostream"
+using namespace std;
+
+class Node
+{
+public:
+	int data;		//data part for each node
+	Node* next;		//pointer to point next node
+	Node()			//initializing a node
+	{
+		data=0;
+		next=NULL;
+	}
+	Node(int d)		//for creating new node
+	{
+		data=d;
+		next=NULL;
+	}
+};
+class LinkList
+{
+private:
+	Node* head;		//to point head or address of 1st node
+	int n;
+public:
+	LinkList()
+	{
+		n=0;
+		head=NULL;
+	}
+	void addNode(int d)
+	{
+		Node* newNode=new Node();
+		n++;
+		newNode->data=d;
+		if(head==NULL)
+		{
+			head=newNode;
+			return;
+		}
+		Node *temp=head,*prev=NULL,*Next=temp->next;
+		for(int i=0;i<n;i++)
+		{
+			if(newNode->data < temp->data && temp==head)
+			{
+				head=newNode;
+				newNode->next=temp;
+				return;
+			}
+			if(newNode->data < temp->data)
+			{
+				prev->next=newNode;
+				newNode->next=temp;
+				return;
+			}
+			if(temp->data <= newNode->data && Next==NULL)
+			{
+				temp->next=newNode;
+				newNode->next=Next;
+				return;
+			}
+			prev=temp;
+			temp=Next;
+			Next=Next->next;	
+		}
+		temp->next=newNode;
+	}
+
+	int deleteAtFront()
+	{
+		Node *temp=head,*prev=NULL;
+		if(head==NULL)
+		{
+			cout<<"\n--list is empty--\n";
+			return 0;
+		}
+		int v=temp->data;
+		if(temp->next==NULL)
+		{
+			head=NULL;
+		}
+		else
+		{	temp=temp->next;
+			head=temp;
+		}
+		return v;
+	}
+	
+	void printList()
+	{
+		if(head==NULL)		//when list is empty
+		{
+			cout<<"\n--List is empty--\n";
+			return;
+		}
+		cout<<"\nyour list:-\n";
+		Node* temp=head;
+		while(temp->next!=NULL)		
+		{
+			cout<<temp->data<<endl;
+			temp=temp->next;
+		}
+		cout<<temp->data<<endl;
+	}
+};
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	LinkList l;
+	int temp,d;
+	do{
+		cout<<"\nLinked List\nDo you want to?\n";
+		cout<<"1.Insert element.\n2.Delete element.\n3.Print list.\nEnter your choice=";
+		cin>>temp;
+		switch(temp)
+		{
+		case 1:
+			cout<<"\nEnter data for new node=";
+			cin>>d;
+			l.addNode(d);
+			break;
+		case 2:
+			cout<<"\n---Deleted element is "<<l.deleteAtFront()<<"---\n";
+			break;
+		case 3:
+			l.printList();
+			break;
+		}
+	}while(temp==1||temp==2||temp==3);
+	system("pause");
+	return 0;
+}
