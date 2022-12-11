@@ -1,4 +1,4 @@
-#include<iostream>
+#include"iostream"
 using namespace std;
 class Node
 {
@@ -73,7 +73,9 @@ public:
             Prev=trav;
             trav=trav->next;
         }
-        Prev->next=NULL;
+        //Prev->next=NULL;
+		trav->prev->next=NULL;
+		cout<<"del node is "<<trav->data<<"\t"<<trav;
         return trav->data;
     }
     int deleteNodeAtFront()
@@ -91,6 +93,7 @@ public:
         }
         head=head->next;
         trav->next->prev=head;
+		return trav->data;
     }
     void display()
     {
@@ -103,16 +106,16 @@ public:
         cout<<"\nyour list->\n";
         while(trav->next != NULL)
         {
-            cout<<trav->data<<endl;
+            cout<<trav->data<<"\t"<<trav<<endl;
             trav=trav->next;
         }
-        cout<<trav->data<<endl;
+        cout<<trav->data<<"\t"<<trav<<endl;
     }
 };
 int main()
 {
     DoublyLinkList l;
-	int temp,d;
+	int temp,d,c;
 	do{
 		cout<<"\nLinked List\nDo you want to?\n";
 		cout<<"1.Insert element at front.\n2.Insert element at End.\n3.Delete element at front.\n4.Delete element at end\n5.Print list.\nEnter your choice=";
@@ -129,9 +132,15 @@ int main()
 			cin>>d;
             l.addNodeAtEnd(d);
             break;
+		case 3:
+			c=l.deleteNodeAtFront();
+			if(c)
+				cout<<"--deleted element is "<<c<<"--\n";
+            break;
         case 4:
-            if(l.deleteNodeAtEnd())
-                cout<<"--deleted element is "<<l.deleteNodeAtEnd()<<"--\n";
+            c=l.deleteNodeAtEnd();
+			if(c)
+				cout<<"--deleted element is "<<c<<"--\n";
             break;
         case 5:
             l.display();
