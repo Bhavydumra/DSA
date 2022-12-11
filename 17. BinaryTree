@@ -1,0 +1,131 @@
+#include"iostream"
+using namespace std;
+template<class T>
+T max(T a,T b)
+{
+	return (a>b)?a:b;
+}
+class Node
+{
+public:
+	int data;
+	Node *left,*right;
+	Node(int d)
+	{
+		this->data=d;
+		left=NULL;
+		right=NULL;
+	}
+};
+class BinaryTree
+{
+private:
+	Node *root;
+public:
+	BinaryTree()
+	{
+		root=NULL;
+	}
+	void addNode(int d)
+	{
+		Node *newNode = new Node(d);
+		if(root==NULL)
+		{
+			root=newNode;
+			return;
+		}
+		Node *trav=root;
+		while(trav !=NULL)
+		{
+			if(d > trav->data)
+			{
+				if(trav->right != NULL)
+					trav=trav->right;
+				else
+				{
+					trav->right=newNode;
+					break;
+				}
+			}
+			else
+			{
+				if(trav->left!=nullptr)
+					trav=trav->left;
+				else
+				{
+					trav->left=newNode;
+					break;
+				}
+			}
+		}
+	}
+	void preOrder(Node *temp)
+	{
+		if(temp)
+		{
+			cout<<"\n"<<temp->data<<endl;
+			inOrder(temp->left);
+			inOrder(temp->right);
+		}
+	}
+	void inOrder(Node *temp)
+	{
+		if(temp)
+		{
+			inOrder(temp->left);
+			cout<<"\n"<<temp->data<<endl;
+			inOrder(temp->right);
+		}
+	}
+	void postOrder(Node *temp)
+	{
+		if(temp)
+		{
+			cout<<"\n"<<temp->data<<endl;
+			inOrder(temp->left);
+			inOrder(temp->right);
+		}
+	}
+	void print(int ch)
+	{
+		switch(ch)
+		{
+		case 1:
+			cout<<"\nPreorder traversing->\n";
+			preOrder(root);
+			break;
+		case 2:
+			cout<<"\nInorder traversing->\n";
+			inOrder(root);
+			break;
+		case 3:
+			cout<<"\nPostorder traversing->\n";
+			postOrder(root);
+			break;
+		}
+	}
+};
+int main()
+{
+	BinaryTree b;
+	int v,temp;
+	do
+	{
+		cout<<"\n1.Add data in tree.\n2.Preorder traversing.\n3.Inorder traversing.\n4.Postorder traversing.\nEnter choice=";
+		cin>>temp;
+		switch(temp)
+		{
+		case 1:
+			cout<<"\nEnter data= ";
+			cin>>v;
+			b.addNode(v);
+			break;
+		case 2:
+		case 3:
+		case 4:
+			b.print(temp-1);
+			break;
+		}
+	}while(temp>0 && temp<5);
+	return 0;
+}
