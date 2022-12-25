@@ -1,0 +1,114 @@
+// Fractional knapsack.cpp : Defines the entry point for the console application.
+//
+#include "stdafx.h"
+#include"iostream"
+#include<string>
+using namespace std;
+template <class t>
+t max(t a,t b)
+{
+	return (a>b)?a:b;
+}
+void swap(double &a,double &b)
+{
+	double temp=a;
+	a=b;
+	b=temp;
+}
+class Item
+{
+public:
+	string name;
+	double weight,cost,unitcost;
+};
+class Knapsack
+{
+private:
+	Item *item;
+	int n;
+public:
+	Knapsack(int n)
+	{
+		this->n=n;
+		item=new Item[n];
+	}
+	void getItem()
+	{
+		cout<<"\nEnter values for "<<n<<" items->\n";
+		for(int i=0;i<n;i++)
+		{
+			cout<<"Name->";
+			cin>>item[i].name;
+			cout<<"Weight->";
+			cin>>item[i].weight;
+			cout<<"Cost->";
+			cin>>item[i].cost;
+			item[i].unitcost=item[i].cost / item[i].weight;
+		}
+	}
+	void sortItems()
+	{
+		int i,j;
+		for(i=0;i<n;i++)
+			for(j=0;j<n;j++)
+			{
+				if(item[j].unitcost < item[j+1].unitcost)
+				{
+					swap(item[j],item[j+1]);
+				}
+			}
+	}
+	void display()
+	{
+		cout<<"\nTotal items->\n";
+		for(int i=0;i<n;i++)
+		{
+			cout<<"\nItem-"<<i<<"->";
+			cout<<"\nName->"<<item[i].name;
+			cout<<"\nWeight->"<<item[i].weight;
+			cout<<"\nCost->"<<item[i].cost;
+			cout<<"\nUnit Cost->"<<item[i].unitcost<<endl;
+		}
+	}
+	double fillKnapsack(double wk)
+	{
+		double profit=0,wadded=0;
+		for(int i=0;i<n;i++)
+		{
+			if(wadded==wk)
+			{
+				return profit;
+			}
+			if(item[i].weight<=wk-wadded)
+			{
+				cout<<"\nadd item "<<item[i].name<<" of weight "<<item[i].weight<<endl;
+				wadded=wadded+item[i].weight;
+				profit=profit+item[i].cost;
+			}
+			else
+			{
+				int emtk=wk-wadded;
+				cout<<"\nadd item "<<item[i].name<<" of weight "<<emtk<<endl;
+				wadded=wadded+emtk;
+				profit=profit+emtk*item[i].unitcost;
+			}
+		}
+		return profit;
+	}
+};
+int main()
+{
+	int n;
+	double W;
+	cout<<"\nEnter total number of items->";
+	cin>>n;
+	Knapsack obj(n);
+	obj.getItem();
+	obj.sortItems();
+	obj.display();
+	cout<<"\nEnter weight of knapsack->";
+	cin>>W;
+	cout<<"\nprofit-> "<<obj.fillKnapsack(W);
+	system("pause");
+	return 0;
+}
