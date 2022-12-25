@@ -4,11 +4,6 @@
 #include"iostream"
 #include<string>
 using namespace std;
-template <class t>
-t max(t a,t b)
-{
-	return (a>b)?a:b;
-}
 void swap(double &a,double &b)
 {
 	double temp=a;
